@@ -1100,6 +1100,17 @@ class Guake(SimpleGladeApp):
                 vte_title = current_directory.split('/')[-1]
                 if not vte_title:
                     vte_title = "(root)"
+            if self.display_tab_names == 3:
+                hook_result = self.execute_hook('tab-name', stdin=json.dumps({
+                    'current_title': vte_title,
+                    'current_directory': current_directory,
+                }))
+                if hook_result is not None and hook_result != '-':
+                    vte_title = hook_result
+                else:
+                    vte_title = current_directory.split('/')[-1]
+                    if not vte_title:
+                        vte_title = "(root)"
         except OSError:
             pass
         return TabNameUtils.shorten(vte_title, self.settings)
@@ -1273,13 +1284,25 @@ class Guake(SimpleGladeApp):
         else:
             self.get_notebook().set_tab_pos(Gtk.PositionType.BOTTOM)
 
-    def execute_hook(self, event_name):
+    def execute_hook(self, event_name, stdin=None):
         """Execute shell commands related to current event_name"""
         hook = self.settings.hooks.get_string('{!s}'.format(event_name))
         if hook is not None and hook != "":
             hook = hook.split()
             try:
-                subprocess.Popen(hook)
+                if stdin is not None:
+                    with subprocess.Popen(hook, universal_newlines=True, stdin=subprocess.PIPE, stdout=subprocess.PIPE, stderr=subprocess.PIPE) as proc:
+                        proc.stdin.write(str(stdin))
+                        proc.stdin.close()
+                        output = proc.stdout.read()
+                        errors = proc.stderr.read()
+                        proc.wait()
+                        status = proc.returncode
+                    if status:
+                        raise subprocess.CalledProcessError(status, cmd=hook, stdout=output, stderr=errors)
+                    return output
+                else:
+                    subprocess.Popen(hook)
             except OSError as oserr:
                 if oserr.errno == 8:
                     log.error("Hook execution failed! Check shebang at first line of %s!", hook)

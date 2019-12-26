@@ -254,7 +254,7 @@
         <key name="display-tab-names" type="i">
             <default>0</default>
             <summary>How to display tab names.</summary>
-            <description>Controls how the tab names are displayed. 0: Full Path, 1: Abbreviated Path, 2: Only display the last segment of the path</description>
+            <description>Controls how the tab names are displayed. 0: Full Path, 1: Abbreviated Path, 2: Only display the last segment of the path, 3: On tab name change hook output</description>
         </key>
         <key name="gtk-theme-name" type="s">
             <default>''</default>
@@ -574,6 +574,11 @@
             <default>''</default>
             <summary>On show.</summary>
             <description>Run this script on show.</description>
+        </key>
+        <key name="tab-name" type="s">
+            <default>''</default>
+            <summary>On tab name change.</summary>
+            <description>Run this script on tab name change.</description>
         </key>
     </schema>
 </schemalist>

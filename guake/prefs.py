@@ -472,6 +472,9 @@ class PrefsCallbacks():
     def on_hook_show_changed(self, edt):
         self.settings.hooks.set_string('show', edt.get_text())
 
+    def on_hook_tab_name_changed(self, edt):
+        self.settings.hooks.set_string('tab-name', edt.get_text())
+
     def on_window_tabbar_toggled(self, chk):
         """Changes the activity of window_tabbar in dconf
         """

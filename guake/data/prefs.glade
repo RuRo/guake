@@ -753,6 +753,7 @@
                                                   <item translatable="yes" >Full Path</item>
                                                   <item translatable="yes">Abbreviated Path</item>
                                                   <item translatable="yes">Last Segment</item>
+                                                  <item translatable="yes">Tab Name Hook</item>
                                                 </items>
                                                 <signal name="changed" handler="on_tab_name_display_changed" swapped="no"/>
                                               </object>
@@ -2752,6 +2753,19 @@ For example, for sublime, use &lt;b&gt;subl %(file_path)s:%(line_number)s&lt;/b&
                                               </packing>
                                             </child>
                                             <child>
+                                              <object class="GtkLabel" id="label_hook_on_tab_name">
+                                                <property name="visible">True</property>
+                                                <property name="can_focus">False</property>
+                                                <property name="halign">start</property>
+                                                <property name="margin_right">12</property>
+                                                <property name="label" translatable="yes">On tab name change:</property>
+                                              </object>
+                                              <packing>
+                                                <property name="left_attach">0</property>
+                                                <property name="top_attach">2</property>
+                                              </packing>
+                                            </child>
+                                            <child>
                                               <object class="GtkEntry" id="hook_show">
                                                 <property name="width_request">400</property>
                                                 <property name="visible">True</property>
@@ -2774,6 +2788,19 @@ For example, for sublime, use &lt;b&gt;subl %(file_path)s:%(line_number)s&lt;/b&
                                               <packing>
                                                 <property name="left_attach">1</property>
                                                 <property name="top_attach">1</property>
+                                              </packing>
+                                            </child>
+                                            <child>
+                                              <object class="GtkEntry" id="hook_tab_name">
+                                                <property name="width_request">400</property>
+                                                <property name="visible">True</property>
+                                                <property name="can_focus">True</property>
+                                                <property name="invisible_char">•</property>
+                                                <signal name="changed" handler="on_hook_tab_name_changed" swapped="no"/>
+                                              </object>
+                                              <packing>
+                                                <property name="left_attach">1</property>
+                                                <property name="top_attach">2</property>
                                               </packing>
                                             </child>
                                           </object>

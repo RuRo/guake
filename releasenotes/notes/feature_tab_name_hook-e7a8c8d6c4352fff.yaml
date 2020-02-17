@@ -1,0 +1,6 @@
+features:
+  - |
+      - Added the on tab name change hook.
+        This hook is triggered every time, the tab name is changed automatically
+        (i.e. on a directory change), the hook also receives the new tab name on
+        stdin and the tab name is replaced with the stdout of the hook command.
